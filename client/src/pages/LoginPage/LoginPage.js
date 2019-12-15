@@ -1,10 +1,10 @@
 import React, { Component } from 'react'
+import { api } from '../../helpers/Api'
 
 class LoginPage extends Component {
 	constructor(props) {
 		super(props);
 		this.state={
-				username:'',
 				account:'',
 				password:'',
 				errors:'',
@@ -17,8 +17,32 @@ class LoginPage extends Component {
 		this.setState({ [name]: value });
 	}
 
+	//Nếu muốn xử lý login thì xử lý thằng này 
+	handleLogIn = (e) => {
+		e.preventDefault();
+		const user = {
+				email: this.state.email,
+				password: this.state.password
+		};
+		// Ở đây post login với http://localhost:4000/api/login
+		// Viết bên server nha 
+		api.post('/login', user)
+    .then(res => {
+			console.log('Result',res);
+        // Save Token to Local Storage And Send state for modal
+        // const {token} = res.data;
+        // localStorage.setItem('jwtToken', token);
+        // setAuthToken(token);
+        // const decoded = jwt_decode(token);
+        // dispatch(setCurrentUser(decoded));
+    })
+    .catch(err => {
+			console.log('Error')
+    });
+	}
+
 	render() {
-		const {errors, password, account, username} = this.state;
+		const {errors, password, account} = this.state;
 		return (
 			<div className="LoginPage">
 				{/* Content In NAVBAR before LOGIN */}
@@ -31,12 +55,12 @@ class LoginPage extends Component {
 						(errors.password && <div className="Alert">Your e-mail/password is invalid!</div>))}
 						{/* Nhập tài khoản */}
 						<div className="inputform">
-							<div for="account">Tên đăng nhập*</div>
+							<div className="LoginInput">Tên đăng nhập*</div>
 							<input id={`${errors && errors.account && 'ErrorForm'}`} type="text" placeholder="Điền tài khoản..." name="account" className="account" onChange={this.handleTextChange} value={account}/>
 						</div>
 						<div className="inputform">
-							<div for="password">Mật khẩu*</div>
-							<input id={`${errors && errors.password && 'ErrorForm'}`} type="password" placeholder="Điền mật khẩu..." name="password" onChange={this.handleTextChange} value={password}/>
+							<div className="LoginInput">Mật khẩu*</div>
+							<input id={`${errors && errors.password && 'ErrorForm'}`} type="password" placeholder="Điền mật khẩu..." name="password" className="password" onChange={this.handleTextChange} value={password}/>
 						</div>
 						{/* <div className="otherform">
 							<input type="checkbox" name="remember" value="remember" className="remembercheckbox"/>
@@ -48,7 +72,7 @@ class LoginPage extends Component {
 						<button className="Login" onClick={this.handleLogin}>Đăng Nhập</button>
 					</div>
 				</div>
-				<div classname="RegisterRedirect">
+				<div className="RegisterRedirect">
 					<button className="Register" onClick={this.handleRes}>Register</button>
 				</div>
 			</div>
