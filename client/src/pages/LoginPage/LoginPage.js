@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { api } from '../../helpers/Api'
-
+import './LoginPage.scss';
 class LoginPage extends Component {
 	constructor(props) {
 		super(props);
@@ -73,6 +73,8 @@ class LoginPage extends Component {
 					</div>
 				</div>
 				<div className="RegisterRedirect">
+					<div className="Register_Paragraph">Bạn là khách hàng mới và bạn chưa có tài khoản?</div>
+					<div className="Register_Paragraph">Chỉ với 1 cú click, bạn sẽ có thể tham gia vào website</div>
 					<button className="Register" onClick={this.handleRes}>Register</button>
 				</div>
 			</div>
