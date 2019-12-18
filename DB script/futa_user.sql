@@ -1,0 +1,17 @@
+USE futaTicket
+GO
+
+CREATE LOGIN [futamanager1] WITH PASSWORD=N'123', DEFAULT_LANGUAGE=[us_english]
+GO
+
+CREATE LOGIN [futamanager2] WITH PASSWORD=N'123', DEFAULT_LANGUAGE=[us_english]
+GO
+
+CREATE LOGIN [user1] WITH PASSWORD=N'123'
+
+CREATE LOGIN [user2] WITH PASSWORD= N'123'
+
+CREATE USER [futamanager1]
+CREATE USER [futamanager2]
+CREATE USER [user1]
+CREATE USER [user2]
