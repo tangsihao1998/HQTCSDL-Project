@@ -3,7 +3,9 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+//Install 
 const cors = require('cors');
+var sql = require("mssql");
 
 var apiRouter = require('./routes/api')
 var indexRouter = require('./routes/index');
@@ -41,5 +43,13 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render('error');
 });
+
+//Initiallising connection string
+var dbConfig = {
+  user:  “<dbUserName>”,
+  password: “<dbPassword>”,
+  server: "eu-az-sql-serv1.database.windows.net",
+  database: "futaTicket"
+};
 
 module.exports = app;
