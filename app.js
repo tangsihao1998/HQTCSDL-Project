@@ -31,11 +31,11 @@ const config = {
   authentication: {
     options: {
       userName: "sqlserver", // update me
-      password: "password" // update me
+      password: "Progamer28" // update me
     },
     type: "default"
   },
-  server: "eu-az-sql-serv1.database.windows.net", // update me
+  server: "127.0.0.1", // update me
   options: {
     database: "futaTicket", //update me
     encrypt: true
