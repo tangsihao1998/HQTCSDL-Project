@@ -30,7 +30,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 const config = {
   authentication: {
     options: {
-      userName: "username", // update me
+      userName: "sqlserver", // update me
       password: "password" // update me
     },
     type: "default"
