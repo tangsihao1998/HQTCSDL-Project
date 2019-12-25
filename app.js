@@ -5,7 +5,8 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 //Install 
 const cors = require('cors');
-var sql = require("mssql");
+const { Connection, Request } = require("tedious");
+// var sql = require("mssql");
 
 var apiRouter = require('./routes/api')
 var indexRouter = require('./routes/index');
@@ -23,6 +24,37 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+
+// -----------------------------CREATE CONNECTION TO MSSQL--------------------------------------
+// Create connection to database
+const config = {
+  authentication: {
+    options: {
+      userName: "username", // update me
+      password: "password" // update me
+    },
+    type: "default"
+  },
+  server: "eu-az-sql-serv1.database.windows.net", // update me
+  options: {
+    database: "futaTicket", //update me
+    encrypt: true
+  }
+};
+
+//CREATE CONNECTION to MSSQL server 
+const connection = new Connection(config);
+
+// Attempt to connect and execute queries if connection goes through
+connection.on("connect", err => {
+  if (err) {
+    console.error(err.message);
+  } else {
+    queryDatabase();
+  }
+});
+
+// ---------------------------------------------------------------------------------------------
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
@@ -44,12 +76,12 @@ app.use(function(err, req, res, next) {
   res.render('error');
 });
 
-//Initiallising connection string
-var dbConfig = {
-  user:  “<dbUserName>”,
-  password: “<dbPassword>”,
-  server: "eu-az-sql-serv1.database.windows.net",
-  database: "futaTicket"
-};
+// //Initiallising connection string
+// var dbConfig = {
+//   user:  “<dbUserName>”,
+//   password: “<dbPassword>”,
+//   server: "eu-az-sql-serv1.database.windows.net",
+//   database: "futaTicket"
+// };
 
 module.exports = app;
