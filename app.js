@@ -35,7 +35,7 @@ const config = {
     },
     type: "default"
   },
-  server: "localhost", // update me
+  server: "34.87.65.79", // update me
   options: {
     database: "futaTicket", //update me
     encrypt: true
