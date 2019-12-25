@@ -1,2 +1,1 @@
- heroku buildpacks:add --index=1 https://github.com/emartech/heroku-buildpack-cloud-sql-proxy
- bin/run_cloud_sql_proxy
+bin/run_cloud_sql_proxy
