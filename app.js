@@ -5,12 +5,12 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 //Install 
 const cors = require('cors');
-const { Connection, Request } = require("tedious");
 // var sql = require("mssql");
 
-var apiRouter = require('./routes/api')
+var apiRouter = require('./routes/api');
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
+var employeesRouter = require('./routes/employees');
 
 var app = express();
 
@@ -25,76 +25,10 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-// -----------------------------CREATE CONNECTION TO MSSQL--------------------------------------
-// Create connection to database
-const config = {
-  authentication: {
-    options: {
-      userName: "sqlserver", // update me
-      password: "Progamer28" // update me
-    },
-    type: "default"
-  },
-  server: "34.87.65.79", // update me
-  options: {
-    database: "futaTicket", //update me
-    encrypt: true
-  }
-};
-
-//CREATE CONNECTION to MSSQL server 
-const connection = new Connection(config);
-
-// Attempt to connect and execute queries if connection goes through
-connection.on("connect", err => {
-  if (err) {
-    console.error(err.message);
-  } else {
-    queryDatabase();
-  }
-});
-
-// Attempt to connect and execute queries if connection goes through
-connection.on("connect", err => {
-  if (err) {
-    console.error(err.message);
-  } else {
-    queryDatabase();
-  }
-});
-
-function queryDatabase() {
-  console.log("Reading rows from the Table...");
-
-  // Read all rows from table
-  const request = new Request(
-    `SELECT TOP 20 pc.Name as CategoryName,
-                   p.name as ProductName
-     FROM [SalesLT].[ProductCategory] pc
-     JOIN [SalesLT].[Product] p ON pc.productcategoryid = p.productcategoryid`,
-    (err, rowCount) => {
-      if (err) {
-        console.error(err.message);
-      } else {
-        console.log(`${rowCount} row(s) returned`);
-      }
-    }
-  );
-
-  request.on("row", columns => {
-    columns.forEach(column => {
-      console.log("%s\t%s", column.metadata.colName, column.value);
-    });
-  });
-
-  connection.execSql(request);
-}
-
-// ---------------------------------------------------------------------------------------------
-
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/api', apiRouter);
+app.use('/employees', employeesRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -111,13 +45,5 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render('error');
 });
-
-// //Initiallising connection string
-// var dbConfig = {
-//   user:  “<dbUserName>”,
-//   password: “<dbPassword>”,
-//   server: "eu-az-sql-serv1.database.windows.net",
-//   database: "futaTicket"
-// };
 
 module.exports = app;

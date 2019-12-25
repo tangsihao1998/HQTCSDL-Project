@@ -32,7 +32,7 @@ connection.on("connect", err => {
 });
 
 // ---------------------------------------------------------------------------------------------
-// For user: /api/login
+// For employees: /employees/login
 router.post('/login', async (req,res) => {
 	const user = req.body;
 	const passwordHash = sha256(user.password);
@@ -66,7 +66,6 @@ router.post('/login', async (req,res) => {
 	return res;
 });
 // ---------------------------------------------------------------------------------------------
-
 
 
 
