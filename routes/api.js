@@ -2,13 +2,19 @@ var express = require('express');
 var router = express.Router();
 const sha256 = require('sha256');
 const { Connection, Request } = require("tedious");
+
+/* GET home page. */
+router.get('/', function(req, res, next) {
+  res.render('index', { title: 'Express' });
+});
+
 // -----------------------------CREATE CONNECTION TO MSSQL--------------------------------------
 // Create connection to database
 const config = {
   authentication: {
     options: {
-      userName: "sqlserver", // update me
-      password: "Progamer28" // update me
+      userName: "serviceAccount", // update me
+      password: "@Nhom1016clc1" // update me
     },
     type: "default"
   },
@@ -49,16 +55,19 @@ router.post('/login', async (req,res) => {
 
 	request.on("row", columns => {
     columns.forEach(column => {
-			if( column.value == true){
-				console.log('Success');
-				res.json({Success: "Success"});
-				// Phân quyền 
-				//tao lai connection = tk user
-			}
-			else{
-				console.log('Fail')
-				res.json({Success: "Fail"});
-			}
+			if( column.value == 0){
+        res.json({Success: "Success"});
+        const usersRouter = require('./users');
+        router.use('/users', usersRouter);
+      }
+      if( column.value == 1){
+        res.json({Success: "Success"});
+        const employeeRouter = require('./employees');
+        router.use('/employees', employeeRouter);
+      }
+      if( column.value == 2){
+        res.json({Success: "Success"});
+      }
     });
   });
 
@@ -66,8 +75,5 @@ router.post('/login', async (req,res) => {
 	return res;
 });
 // ---------------------------------------------------------------------------------------------
-
-
-
 
 module.exports = router;

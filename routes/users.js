@@ -1,9 +1,40 @@
 var express = require('express');
 var router = express.Router();
+const sha256 = require('sha256');
+const { Connection, Request } = require("tedious");
 
 /* GET users listing. */
 router.get('/', function(req, res, next) {
   res.send('respond with a resource');
+});
+
+// -----------------------------CREATE CONNECTION TO MSSQL--------------------------------------
+// Create connection to database
+const config = {
+  authentication: {
+    options: {
+      userName: "futaUser", // update me
+      password: "@Nhom1016clc1" // update me
+    },
+    type: "default"
+  },
+  server: "34.87.65.79", // update me
+  options: {
+    database: "futaTicket", //update me
+    encrypt: true
+  }
+};
+
+//CREATE CONNECTION to MSSQL server 
+const connection = new Connection(config);
+
+// Attempt to connect and execute queries if connection goes through
+connection.on("connect", err => {
+  if (err) {
+    console.error(err.message);
+  } else {
+    console.log("DB connect success");
+  }
 });
 
 // ---------------------------------------------------------------------------------------------
