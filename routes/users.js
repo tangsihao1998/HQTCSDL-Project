@@ -59,7 +59,7 @@ router.post('/tour', async (req,res) => {
 router.post('/tour', async (req,res) => {
   const booking = req.body;
   // them _resolved vao sau doan EXEC o duoi khi demo
-	const reqString = `EXEC dbo.sp_createBooking ${booking.userID} ${booking.activeTourID} ${booking.departPlace} ${booking.departDate} ${booking.destPlace} ${booking.price} ${booking.seatID} ${booking.timePlaced}`;
+	const reqString = `EXEC dbo.sp_createBooking ${booking.userID}, ${booking.activeTourID}, ${booking.departPlace}, ${booking.departDate}, ${booking.destPlace}, ${booking.price}, ${booking.seatID}, ${booking.timePlaced}`;
 	const request = new Request( reqString,
     (err, rowCount) => {
       if (err) {

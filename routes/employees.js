@@ -80,7 +80,7 @@ router.post('/login', async (req,res) => {
 router.post('/tour/edit', async (req,res) => {
   const tour = req.body;
   // them _resolved vao sau doan EXEC o duoi khi demo
-	const reqString = `EXEC dbo.sp_editActiveTour ${tour.id} ${tour.vehID} ${tour.departPlace} ${tour.destPlace} ${tour.departDate} ${tour.duration} ${tour.numOfSeats} ${tour.ticketPrice} `;
+	const reqString = `EXEC dbo.sp_editActiveTour ${tour.id}, ${tour.vehID}, ${tour.departPlace}, ${tour.destPlace}, ${tour.departDate}, ${tour.duration}, ${tour.numOfSeats}, ${tour.ticketPrice}`;
 	const request = new Request( reqString,
     (err, rowCount) => {
       if (err) {
