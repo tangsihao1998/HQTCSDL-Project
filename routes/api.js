@@ -3,9 +3,10 @@ var router = express.Router();
 const exec = require('child_process').exec;
 
 router.post('/login', async (req,res) => {
-	const user = req.body.user;
+	const user = req.body;
     console.log("TCL: user", user)
-
+	res.json({Success: "Success"});
+	return res;
 	// const newPath = '.\\..\\..\\images\\' + req.body.filename;
 	// const myShellScript = exec('python CNN_importImage.py '+ newPath);
 	// myShellScript.stdout.on('data', (data)=>{
